@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:amazon_clone/common/widgets/bottom_bar.dart';
 import 'package:amazon_clone/constants/enums.dart';
 import 'package:amazon_clone/constants/error_handling.dart';
 import 'package:amazon_clone/constants/global_variables.dart';
@@ -73,7 +74,7 @@ class AuthService {
           'x-auth-token': token!,
         },
       );
-      print(" token response: ${tokenResponse.body}");
+      // print(" token response: ${tokenResponse.body}");
 
       var responce = jsonDecode(tokenResponse.body);
 
@@ -86,17 +87,14 @@ class AuthService {
             'x-auth-token': token,
           },
         );
-        print(" user response: ${userRes.body}");
-
-        var userProvider = Provider.of<UserProvider>(context, listen: false);
-        userProvider.setUser(userRes.body);
+        // print(" user response: ${userRes.body}");
+        Provider.of<UserProvider>(context, listen: false).setUser(userRes.body);
       }
     } catch (e) {
-      print(e.toString());
-      // showSnackBar(
-      //   context,
-      //   e.toString(),
-      // );
+      showSnackBar(
+        context,
+        e.toString(),
+      );
     }
   }
 
@@ -124,10 +122,9 @@ class AuthService {
           SharedPreferences pref = await SharedPreferences.getInstance();
           Provider.of<UserProvider>(context, listen: false).setUser(res.body);
           pref.setString('x-auth-token', jsonDecode(res.body)['token']);
-          print(pref.getString('x-auth-token'));
           Navigator.pushNamedAndRemoveUntil(
             context,
-            HomeScreen.routeName,
+            Bottombar.routeName,
             (route) => false,
           );
         },

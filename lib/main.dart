@@ -1,6 +1,6 @@
+import 'package:amazon_clone/common/widgets/bottom_bar.dart';
 import 'package:amazon_clone/feature/auth/screens/auth_screens.dart';
 import 'package:amazon_clone/feature/auth/services/auth_service.dart';
-import 'package:amazon_clone/feature/home/screens/home_screen.dart';
 import 'package:amazon_clone/providers/user_provider.dart';
 import 'package:amazon_clone/route.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +41,7 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
       ),
       home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-          ? const HomeScreen()
+          ? const Bottombar()
           : const AuthScreen(),
     );
   }
