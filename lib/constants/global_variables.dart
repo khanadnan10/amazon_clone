@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+String uri = 'http://192.168.29.24:3000';
+
 class GlobalVariables {
   // COLORS
   static const appBarGradient = LinearGradient(
@@ -47,4 +49,8 @@ class GlobalVariables {
       'image': 'assets/images/fashion.jpeg',
     },
   ];
+
+  static const Map<String, String> headers = <String, String>{
+    'Content-Type': 'application/json; charset=UTF-8',
+  };
 }

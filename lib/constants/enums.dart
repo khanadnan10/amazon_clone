@@ -1,6 +1,10 @@
-
 // Check for the type of authentication while login or signup
-enum AuthType{
+enum AuthType {
   login,
-  signup
+  signup,
+}
+
+enum UserType {
+  user,
+  admin,
 }

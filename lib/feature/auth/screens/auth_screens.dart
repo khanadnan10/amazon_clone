@@ -1,10 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:amazon_clone/feature/auth/widgets/custom_button.dart';
+import 'package:amazon_clone/common/widgets/custom_button.dart';
+import 'package:amazon_clone/feature/auth/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 import 'package:amazon_clone/constants/enums.dart';
 import 'package:amazon_clone/constants/global_variables.dart';
-import 'package:amazon_clone/feature/auth/widgets/custom_text_field.dart';
+import 'package:amazon_clone/common/widgets/custom_text_field.dart';
 
 class AuthScreen extends StatefulWidget {
   static const String routeName = '/auth-screen';
@@ -31,6 +32,26 @@ class _AuthScreenState extends State<AuthScreen> {
     super.dispose();
   }
 
+  AuthService authService = AuthService();
+
+  void signUpUser() {
+    authService.signUpUser(
+      name: _nameController.text,
+      email: _emailController.text,
+      context: context,
+      password: _passwordController.text,
+    );
+  }
+
+  void signInUser() {
+    authService.signInUser(
+      email: _emailController.text,
+      context: context,
+      password: _passwordController.text,
+    );
+  }
+
+  // ignore: unused_field
   AuthType _authType = AuthType.login;
 
   @override
@@ -132,7 +153,9 @@ class _AuthScreenState extends State<AuthScreen> {
               CustomButton(
                 text: 'Sign up',
                 onPressed: () {
-                  print('signup ');
+                  if (_signupFormKey.currentState!.validate()) {
+                    signUpUser();
+                  }
                 },
               )
             ],
@@ -168,7 +191,9 @@ class _AuthScreenState extends State<AuthScreen> {
               CustomButton(
                 text: 'Log in',
                 onPressed: () {
-                  print('sign in ');
+                  if (_signinFormKey.currentState!.validate()) {
+                    signInUser();
+                  }
                 },
               )
             ],
