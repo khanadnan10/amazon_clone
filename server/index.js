@@ -13,6 +13,7 @@ app.use(authRouter);
 
 // database connections
 const DB = 'mongodb+srv://adnan:adnanpassword123@cluster0.pbe7qxd.mongodb.net/';
+// const DB = "mongodb://127.0.0.1:27017/myDb";
 mongoose
   .connect(DB)
   .then(() => {
@@ -20,8 +21,8 @@ mongoose
   })
   .catch((e) => {
     console.log(e);
-  }); 
+  });
 
-app.listen(PORT, "0.0.0.0", () => {
+app.listen(PORT, () => {
   console.log(`connected at port: ${PORT}`);
 });

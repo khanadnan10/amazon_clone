@@ -58,7 +58,7 @@ class _AuthScreenState extends State<AuthScreen> {
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: GlobalVariables.greyBackgroundColor,
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24.0),

@@ -1,4 +1,6 @@
 import 'package:amazon_clone/common/widgets/bottom_bar.dart';
+import 'package:amazon_clone/constants/enums.dart';
+import 'package:amazon_clone/feature/admin/screens/admin_screen.dart';
 import 'package:amazon_clone/feature/auth/screens/auth_screens.dart';
 import 'package:amazon_clone/feature/auth/services/auth_service.dart';
 import 'package:amazon_clone/providers/user_provider.dart';
@@ -41,7 +43,12 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
       ),
       home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-          ? const Bottombar()
+          ? Provider.of<UserProvider>(context)
+                  .user
+                  .type
+                  .contains(UserType.user.name)
+              ? const Bottombar()
+              : const AdminScreen()
           : const AuthScreen(),
     );
   }

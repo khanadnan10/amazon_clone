@@ -1,12 +1,16 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:amazon_clone/constants/global_variables.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hintText;
+  final int maxLines;
   final TextEditingController controller;
   const CustomTextField({
     Key? key,
     required this.hintText,
     required this.controller,
+    this.maxLines = 1,
   }) : super(key: key);
 
   @override
@@ -22,7 +26,7 @@ class CustomTextField extends StatelessWidget {
         ),
         focusedBorder: const OutlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.black38,
+            color: GlobalVariables.secondaryColor,
           ),
         ),
       ),
@@ -32,6 +36,7 @@ class CustomTextField extends StatelessWidget {
         }
         return null;
       },
+      maxLines: maxLines,
     );
   }
 }
