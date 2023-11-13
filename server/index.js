@@ -2,6 +2,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 // Import other files
 const authRouter = require("./routes/auth");
+const adminRouter = require("./routes/admin");
+const productRouter = require("./routes/product");
 
 // Server Initialization
 const PORT = 3000;
@@ -10,6 +12,8 @@ const app = express();
 //middleware
 app.use(express.json());
 app.use(authRouter);
+app.use(adminRouter);
+app.use(productRouter);
 
 // database connections
 const DB = 'mongodb+srv://adnan:adnanpassword123@cluster0.pbe7qxd.mongodb.net/';
