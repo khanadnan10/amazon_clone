@@ -1,21 +1,43 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:amazon_clone/common/widgets/loader.dart';
 import 'package:amazon_clone/constants/global_variables.dart';
+import 'package:amazon_clone/feature/admin/model/product.dart';
+import 'package:amazon_clone/feature/home/services/search_services.dart';
 import 'package:amazon_clone/feature/home/widgets/address_box.dart';
-import 'package:amazon_clone/feature/home/widgets/carousel_image.dart';
-import 'package:amazon_clone/feature/home/widgets/deal_of_the_day.dart';
-import 'package:amazon_clone/feature/home/widgets/top_categories.dart';
-import 'package:amazon_clone/feature/search/screens/search_screen.dart';
+import 'package:amazon_clone/feature/search/widgets/searched_product.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
-  static const String routeName = '/home-screen';
+class SearchScreen extends StatefulWidget {
+  static const String routeName = '/search-screen';
+  const SearchScreen({
+    Key? key,
+    required this.searchQuery,
+  }) : super(key: key);
 
-  const HomeScreen({super.key});
+  final String searchQuery;
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<SearchScreen> createState() => _SearchScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _SearchScreenState extends State<SearchScreen> {
+  final SearchServices searchServices = SearchServices();
+  List<Product>? productList = [];
+  void fetchSearchProductItems() async {
+    productList = await searchServices.fetchCategoryProducts(
+      context: context,
+      searchQuery: widget.searchQuery,
+    );
+
+    if (mounted) setState(() {});
+  }
+
+  @override
+  void initState() {
+    fetchSearchProductItems();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,21 +103,26 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      body: const SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            AddressBox(),
-            SizedBox(height: 10.0),
-            TopCategories(),
-            SizedBox(height: 10.0),
-            CarouselImage(),
-            SizedBox(height: 10.0),
-            DealOfTheDay(),
-            SizedBox(height: 10.0),
-          ],
-        ),
-      ),
+      body: productList == null
+          ? const Loader()
+          : Column(
+              children: [
+                const AddressBox(),
+                const SizedBox(
+                  height: 20.0,
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: productList!.length,
+                    itemBuilder: (context, index) {
+                      return SearchedProduct(
+                        product: productList![index],
+                      );
+                    },
+                  ),
+                )
+              ],
+            ),
     );
   }
 }
