@@ -46,4 +46,14 @@ productRouter.post("/api/rate-product", auth, async (req, res) => {
   }
 });
 
+productRouter.get("/api/deal-of-the-day", auth, async (req, res) => {
+  try {
+    let product = await Product.aggregate([{ $sort: { ratings: -1 } }]);
+
+    res.json(product[0]);
+  } catch (er) {
+    res.status(500).json({ error: er.message });
+  }
+});
+
 module.exports = productRouter;
