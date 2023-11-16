@@ -7,8 +7,8 @@ import 'package:amazon_clone/constants/enums.dart';
 import 'package:amazon_clone/constants/error_handling.dart';
 import 'package:amazon_clone/constants/global_variables.dart';
 import 'package:amazon_clone/constants/utils.dart';
+import 'package:amazon_clone/feature/admin/screens/admin_screen.dart';
 import 'package:amazon_clone/feature/auth/model/user.dart';
-import 'package:amazon_clone/feature/home/screens/home_screen.dart';
 import 'package:amazon_clone/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -87,14 +87,10 @@ class AuthService {
             'x-auth-token': token,
           },
         );
-        // print(" user response: ${userRes.body}");
         Provider.of<UserProvider>(context, listen: false).setUser(userRes.body);
       }
     } catch (e) {
-      showSnackBar(
-        context,
-        e.toString(),
-      );
+      debugPrint(e.toString());
     }
   }
 
@@ -122,11 +118,17 @@ class AuthService {
           SharedPreferences pref = await SharedPreferences.getInstance();
           Provider.of<UserProvider>(context, listen: false).setUser(res.body);
           pref.setString('x-auth-token', jsonDecode(res.body)['token']);
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            Bottombar.routeName,
-            (route) => false,
-          );
+          jsonDecode(res.body)['type'] == UserType.user.name
+              ? Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  Bottombar.routeName,
+                  (route) => false,
+                )
+              : Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  AdminScreen.routeName,
+                  (route) => false,
+                );
         },
       );
     } catch (e) {

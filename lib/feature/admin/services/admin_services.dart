@@ -74,6 +74,8 @@ class AdminServices {
     return (success: false, message: 'Retry... Some error occured');
   }
 
+  
+
   // Get all the products ------------------------------------------------------
   FutureListProduct fetchProduct(BuildContext context) async {
     List<Product> productList = [];
@@ -84,7 +86,6 @@ class AdminServices {
         'Content-type': 'application/json; charset=UTF-8',
         'x-auth-token': userProvider.user.token,
       });
-      // print(res.body);
       // ignore: use_build_context_synchronously
       httpErrorHandling(
         response: res,

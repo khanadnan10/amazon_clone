@@ -2,6 +2,7 @@
 import 'package:amazon_clone/common/widgets/loader.dart';
 import 'package:amazon_clone/feature/admin/model/product.dart';
 import 'package:amazon_clone/feature/home/services/home_services.dart';
+import 'package:amazon_clone/feature/product_details/screens/product_details.dart';
 import 'package:flutter/material.dart';
 
 import 'package:amazon_clone/constants/global_variables.dart';
@@ -27,9 +28,7 @@ class _CategoryDealsScreenState extends State<CategoryDealsScreen> {
 
   @override
   void initState() {
-    // WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((timeStamp) {
     fetchCategoryProducts();
-    // });
     super.initState();
   }
 
@@ -93,38 +92,45 @@ class _CategoryDealsScreenState extends State<CategoryDealsScreen> {
                                 mainAxisSpacing: 10.0),
                         itemBuilder: (context, index) {
                           final product = products![index];
-                          return Column(
-                            children: [
-                              SizedBox(
-                                height: 130.0,
-                                child: DecoratedBox(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.black12,
+                          return GestureDetector(
+                            onTap: () => Navigator.pushNamed(
+                              context,
+                              ProductDetailsScreen.routeName,
+                              arguments: product,
+                            ),
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 130.0,
+                                  child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Colors.black12,
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Image.network(
+                                        product.images[0],
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
                                   ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Image.network(
-                                      product.images[0],
-                                      fit: BoxFit.cover,
-                                    ),
+                                ),
+                                Container(
+                                  alignment: Alignment.topLeft,
+                                  padding: const EdgeInsets.only(
+                                    top: 5,
+                                    right: 15.0,
+                                  ),
+                                  child: Text(
+                                    product.name,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
-                              ),
-                              Container(
-                                alignment: Alignment.topLeft,
-                                padding: const EdgeInsets.only(
-                                  top: 5,
-                                  right: 15.0,
-                                ),
-                                child: Text(
-                                  product.name,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           );
                         },
                       ),

@@ -43,10 +43,7 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
       ),
       home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-          ? Provider.of<UserProvider>(context)
-                  .user
-                  .type
-                  .contains(UserType.user.name)
+          ? Provider.of<UserProvider>(context).user.type == UserType.user.name
               ? const Bottombar()
               : const AdminScreen()
           : const AuthScreen(),

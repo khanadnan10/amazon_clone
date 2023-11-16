@@ -15,7 +15,7 @@ Future<List<File>> pickImage() async {
   List<File> images = [];
   try {
     var pickImage = await ImagePicker().pickMultiImage();
-    if (pickImage.isNotEmpty && pickImage != null) {
+    if (pickImage.isNotEmpty) {
       for (var image in pickImage) {
         images.add(File(image.path));
       }

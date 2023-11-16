@@ -28,12 +28,18 @@ class _ProductScreenState extends State<ProductScreen> {
     setState(() {});
   }
 
+  @override
+  void setState(VoidCallback fn) {
+    if (mounted) super.setState(fn);
+  }
+
   void deleteProduct(Product product, int index) {
     adminServices.deleteProduct(
       context: context,
       product: product,
       onSuccess: () {
         setState(() {
+          // ignore: list_remove_unrelated_type
           listOfProduct!.remove(index);
         });
       },

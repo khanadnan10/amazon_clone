@@ -27,6 +27,21 @@ class _DealOfTheDayState extends State<DealOfTheDay> {
           'https://images.unsplash.com/photo-1698782413216-0d5868fe95b3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyMHx8fGVufDB8fHx8fA%3D%3D',
           height: 235.0,
           fit: BoxFit.fitHeight,
+          loadingBuilder: (context, child, loadingProgress) {
+            if (loadingProgress == null) return child;
+            return Center(
+              child: CircularProgressIndicator(
+                value: loadingProgress.expectedTotalBytes != null
+                    ? loadingProgress.cumulativeBytesLoaded /
+                        loadingProgress.expectedTotalBytes!
+                    : null,
+              ),
+            );
+          },
+          errorBuilder: (context, error, stackTrace) => Container(
+            color: Colors.grey[200],
+            child: Text('$error'),
+          ),
         ),
         Container(
           alignment: Alignment.topLeft,
